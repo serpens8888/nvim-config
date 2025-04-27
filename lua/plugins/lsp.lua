@@ -22,7 +22,7 @@ return{
 
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "zls", "ols"},
+                ensure_installed = { "lua_ls", "clangd", "zls", "ols", "gopls", "jdtls",},
                 handlers = {
                     function(server_name)
                         local capabilities = vim.tbl_deep_extend(

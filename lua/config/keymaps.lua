@@ -21,3 +21,11 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     end
 })
+
+autocmd('BufWritePre', {
+    group = serpens_group,
+    pattern = '*',
+    callback = function(args)
+        require('conform').format({ bufnr = args.buf })
+    end
+})

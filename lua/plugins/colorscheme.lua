@@ -1,9 +1,12 @@
 return{
     {
-        "rose-pine/neovim",
-        name = "rose-pine",
+        "maxmx03/fluoromachine.nvim",
+        name = "fluoromachine",
         config = function()
-            vim.cmd("colorscheme rose-pine")
+            require('fluoromachine').setup{
+                transparent = true,
+            }
+            vim.cmd("colorscheme fluoromachine")
         end
     },
 }
