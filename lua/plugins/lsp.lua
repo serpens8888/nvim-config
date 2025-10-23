@@ -13,6 +13,7 @@ return{
             "L3MON4D3/LuaSnip",
             "saadparwaiz1/cmp_luasnip",
             "j-hui/fidget.nvim",
+            "scalameta/nvim-metals",
         },
 
 
@@ -22,7 +23,7 @@ return{
 
             require("mason").setup()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "zls", "ols", "gopls", "jdtls",},
+                ensure_installed = { "lua_ls", "clangd", "zls", "ols", "jdtls",},
                 handlers = {
                     function(server_name)
                         local capabilities = vim.tbl_deep_extend(
@@ -62,6 +63,7 @@ return{
             })
 
 
+            -- slang lsp
             if not lsp_configurations.slangd then
                 lsp_configurations.slangd = {
                     default_config = {
@@ -73,6 +75,27 @@ return{
             end
 
             require('lspconfig').slangd.setup{}
+
+
+            -- scala lsp
+            local metals = require("metals")
+            local metals_config = metals.bare_config()
+            metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+            metals_config.init_options.statusBarProvider = "on"
+            metals_config.setting = {
+                showImplicitArguments = true,
+                superMethodLensesEnabled = true,
+            }
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "scala", "sbt" },
+                callback = function()
+                    metals.initialize_or_attach(metals_config)
+                end,
+            })
+
+
+            -- cmp
             local cmp = require("cmp")
             local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
@@ -82,9 +105,12 @@ return{
                         require("luasnip").lsp_expand(args.body)
                     end
                 },
+
                 window = {
-                    completion = cmp.config.window.bordered({}),
-                    documentation = cmp.config.window.bordered({}),
+                    completion = cmp.config.window.bordered({
+                        border = "double",
+                    }),
+                    documentation = cmp.config.disable,
                 },
 
 
