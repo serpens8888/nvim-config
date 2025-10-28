@@ -20,7 +20,7 @@ return{
         formatters_by_ft = {
             odin = { "odinfmt" },
             scala = { "scalafmt" },
-            sbt = { "scalafmt" },
+            sbtss = { "scalafmt" },
         },
 
 
