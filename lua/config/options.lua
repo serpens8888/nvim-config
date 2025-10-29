@@ -21,6 +21,8 @@ vim.o.termguicolors = true
 
 vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#090909', blend = 1 })
 
+vim.g.zig_fmt_autosave = 0
+
 --theme toggle
 
 
